@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ item_id }} – LegalClause AI</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232D11E9'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -12,11 +13,33 @@
         * {
             font-family: 'Poppins', sans-serif;
         }
+
+        .mcq-option {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mcq-option:hover {
+            transform: translateX(8px);
+        }
     </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex flex-col">
-    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white shadow-sm">
+<body class="bg-gray-50 dark:bg-[oklch(14.1%_0.005_285.823)] min-h-screen flex flex-col dark:bg-[oklch(14.1%_0.005_285.823)] dark:text-gray-100 transition-colors duration-200">
+    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
         <a href="{{ url_for('learning_law_view', law_name=law_name) }}"
             class="flex items-center gap-2 text-indigo-600 font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -26,82 +49,187 @@
             </svg>
             Back to List
         </a>
-        <span class="text-gray-900 font-bold text-xl">{{ item_id }}</span>
+        <span class="text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 font-bold text-xl">{{ item_id }}</span>
         <div class="w-20"></div>
     </nav>
 
     <main class="flex-grow container mx-auto px-6 py-12 max-w-4xl">
         <div class="space-y-8">
             <!-- Original Text -->
-            <section class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <section class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-8 rounded-2xl border border-gray-100 shadow-sm">
+                <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 mb-4 flex items-center gap-2">
                     <span class="w-2 h-6 bg-indigo-600 rounded-full"></span>
                     Original Legal Text
                 </h2>
-                <div class="p-4 bg-gray-50 rounded-xl text-gray-700 italic border-l-4 border-gray-300">
+                <div class="p-4 bg-gray-50 dark:bg-[oklch(14.1%_0.005_285.823)] rounded-xl text-gray-700 dark:text-gray-300 italic border-l-4 border-gray-300 dark:border-white/10">
                     {{ original_text }}
                 </div>
             </section>
 
             <!-- Simplified Explanation -->
-            <section class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <section class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-8 rounded-2xl border border-gray-100 shadow-sm">
+                <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 mb-4 flex items-center gap-2">
                     <span class="w-2 h-6 bg-green-500 rounded-full"></span>
                     Simplified Explanation
                 </h2>
-                <div class="prose prose-indigo max-w-none text-gray-700">
+                <div class="prose prose-indigo max-w-none text-gray-700 dark:text-gray-300">
                     {{ simplified_explanation | safe }}
                 </div>
             </section>
 
             <!-- Real-Life Example -->
-            <section class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <section class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-8 rounded-2xl border border-gray-100 shadow-sm">
+                <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 mb-4 flex items-center gap-2">
                     <span class="w-2 h-6 bg-orange-500 rounded-full"></span>
                     Real-Life Example
                 </h2>
-                <div class="p-4 bg-orange-50 rounded-xl text-gray-700 border border-orange-100">
+                <div class="p-4 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-gray-700 dark:text-gray-300 border border-orange-100 dark:border-orange-800">
                     {{ example }}
                 </div>
             </section>
 
             <!-- MCQ Section -->
-            <section class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                <h2 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+            <section class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-8 rounded-2xl border border-gray-100 shadow-sm">
+                <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 mb-6 flex items-center gap-2">
                     <span class="w-2 h-6 bg-purple-500 rounded-full"></span>
                     Quick Check (MCQ)
                 </h2>
                 <div class="space-y-6">
-                    <p class="font-medium text-gray-800">{{ mcq.question }}</p>
-                    <div class="grid grid-cols-1 gap-3">
+                    <p class="font-medium text-gray-800 dark:text-gray-200">{{ mcq.question }}</p>
+                    <div class="grid grid-cols-1 gap-4" id="mcq-options-container">
                         {% for option in mcq.options %}
                         <button onclick="checkAnswer('{{ option }}', '{{ mcq.answer }}', this)"
-                            class="text-left p-4 rounded-xl border border-gray-200 hover:border-indigo-500 hover:bg-indigo-50 transition-all">
-                            {{ option }}
+                            class="mcq-option text-left p-5 rounded-2xl border-2 border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-[#1a1a2e] focus:outline-none focus:ring-4 focus:ring-indigo-500/20 font-medium text-gray-700 dark:text-gray-300 shadow-sm relative overflow-hidden group">
+                            <span class="relative z-10 flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center shrink-0 group-hover:border-indigo-500 transition-colors">
+                                    <span class="w-3 h-3 rounded-full bg-indigo-500 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+                                </span>
+                                {{ option }}
+                            </span>
                         </button>
                         {% endfor %}
                     </div>
-                    <div id="mcq-feedback" class="hidden p-4 rounded-xl font-medium"></div>
+                    <div id="mcq-feedback" class="hidden p-5 rounded-2xl font-bold flex items-center gap-3 mt-6 shadow-sm"></div>
                 </div>
             </section>
         </div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         function checkAnswer(selected, correct, element) {
             const feedback = document.getElementById('mcq-feedback');
-            feedback.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
+            const container = document.getElementById('mcq-options-container');
+            const icons = container.querySelectorAll('.w-8.h-8');
+            
+            // Reset styles
+            feedback.className = 'hidden p-5 rounded-2xl font-bold flex items-center gap-3 mt-6 shadow-sm';
+            container.querySelectorAll('button').forEach(btn => {
+                btn.className = 'mcq-option text-left p-5 rounded-2xl border-2 border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-[#1a1a2e] focus:outline-none font-medium text-gray-700 dark:text-gray-300 shadow-sm relative overflow-hidden group opacity-50 cursor-not-allowed';
+                btn.disabled = true; // Disable after one click
+            });
+
+            // Update specific clicked element
+            element.classList.remove('opacity-50', 'bg-gray-50', 'dark:bg-[#1a1a2e]', 'border-gray-100', 'dark:border-white/5');
+            const icon = element.querySelector('.w-8.h-8');
 
             if (selected === correct) {
-                feedback.textContent = "Correct! Well done.";
-                feedback.classList.add('bg-green-100', 'text-green-700');
-                element.classList.add('bg-green-100', 'border-green-500');
+                // Correct styling
+                element.classList.add('bg-emerald-50', 'dark:bg-emerald-900/20', 'border-emerald-500', 'ring-4', 'ring-emerald-500/20', 'text-emerald-800', 'dark:text-emerald-300', 'opacity-100');
+                if(icon) {
+                    icon.classList.remove('border-gray-300', 'dark:border-gray-600');
+                    icon.classList.add('border-emerald-500', 'bg-emerald-500');
+                    icon.innerHTML = '<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+                }
+                
+                feedback.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Correct! Excellent reasoning.';
+                feedback.classList.remove('hidden');
+                feedback.classList.add('bg-emerald-100', 'text-emerald-700', 'dark:bg-emerald-900/30', 'dark:text-emerald-400', 'border', 'border-emerald-200', 'dark:border-emerald-800');
+                
+                // Trigger Confetti
+                var duration = 3 * 1000;
+                var animationEnd = Date.now() + duration;
+                var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+                function randomInRange(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+
+                var interval = setInterval(function() {
+                    var timeLeft = animationEnd - Date.now();
+
+                    if (timeLeft <= 0) {
+                        return clearInterval(interval);
+                    }
+
+                    var particleCount = 50 * (timeLeft / duration);
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+                }, 250);
+
             } else {
-                feedback.textContent = "Incorrect. The correct answer is: " + correct;
-                feedback.classList.add('bg-red-100', 'text-red-700');
-                element.classList.add('bg-red-100', 'border-red-500');
+                // Incorrect styling
+                element.classList.add('bg-red-50', 'dark:bg-red-900/20', 'border-red-500', 'ring-4', 'ring-red-500/20', 'text-red-800', 'dark:text-red-300', 'opacity-100');
+                if(icon) {
+                    icon.classList.remove('border-gray-300', 'dark:border-gray-600');
+                    icon.classList.add('border-red-500', 'bg-red-500');
+                    icon.innerHTML = '<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+                }
+
+                feedback.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Incorrect. The correct answer is: <strong>' + correct + '</strong>';
+                feedback.classList.remove('hidden');
+                feedback.classList.add('bg-red-100', 'text-red-700', 'dark:bg-red-900/30', 'dark:text-red-400', 'border', 'border-red-200', 'dark:border-red-800');
             }
         }
+    </script>
+
+    <script>
+        function setupThemeToggle(btnId, darkIconId, lightIconId) {
+            var themeToggleBtn = document.getElementById(btnId);
+            var themeToggleDarkIcon = document.getElementById(darkIconId);
+            var themeToggleLightIcon = document.getElementById(lightIconId);
+
+            if (!themeToggleBtn || !themeToggleDarkIcon || !themeToggleLightIcon) return;
+
+            // Change the icons inside the button based on previous settings
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                // toggle icons inside button
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                // if set via local storage previously
+                if (localStorage.getItem('theme')) {
+                    if (localStorage.getItem('theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+
+                // if NOT set via local storage previously
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupThemeToggle('theme-toggle', 'theme-toggle-dark-icon', 'theme-toggle-light-icon');
+            setupThemeToggle('theme-toggle-mobile', 'theme-toggle-dark-icon-mobile', 'theme-toggle-light-icon-mobile');
+        });
     </script>
 </body>
 

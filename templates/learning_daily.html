@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Legal Learning – LegalClause AI</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232D11E9'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -12,11 +13,56 @@
         * {
             font-family: 'Poppins', sans-serif;
         }
+
+        /* 3D Flashcard Styles */
+        .flashcard-container {
+            perspective: 1000px;
+        }
+
+        .flashcard {
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            position: relative;
+            width: 100%;
+            min-height: 400px;
+            cursor: pointer;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .flashcard-back {
+            transform: rotateY(180deg);
+        }
     </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex flex-col">
-    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white shadow-sm">
+<body class="bg-gray-50 dark:bg-[oklch(14.1%_0.005_285.823)] min-h-screen flex flex-col dark:bg-[oklch(14.1%_0.005_285.823)] dark:text-gray-100 transition-colors duration-200">
+    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
         <a href="{{ url_for('learning') }}" class="flex items-center gap-2 text-indigo-600 font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -25,14 +71,14 @@
             </svg>
             Back to Dashboard
         </a>
-        <span class="text-gray-900 font-bold text-xl">Daily Learning</span>
+        <span class="text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 font-bold text-xl">Daily Learning</span>
         <div class="w-20"></div>
     </nav>
 
     <main class="flex-grow container mx-auto px-6 py-12 max-w-3xl">
         <div class="text-center mb-12">
             <div
-                class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold mb-4">
+                class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-full text-sm font-bold mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
@@ -40,30 +86,46 @@
                 </svg>
                 Concept of the Day: {{ date }}
             </div>
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ concept.title }}</h1>
-            <p class="text-lg text-gray-600">{{ concept.law }}</p>
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 mb-4">{{ concept.title }}</h1>
+            <p class="text-lg text-gray-600 dark:text-gray-400 dark:text-gray-400 dark:text-gray-400">{{ concept.law }}</p>
         </div>
 
-        <div class="space-y-8">
-            <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">The Clause</h2>
-                <p class="text-xl font-semibold text-gray-800 leading-relaxed italic border-l-4 border-indigo-500 pl-6">
-                    "{{ concept.clause }}"
-                </p>
-            </div>
+        <div class="flashcard-container max-w-2xl mx-auto">
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                
+                <!-- Front Side -->
+                <div class="flashcard-face bg-white dark:bg-[oklch(18%_0.005_285.823)] p-10 rounded-3xl border border-gray-100 dark:border-white/5 shadow-xl flex flex-col items-center justify-center text-center">
+                    <svg class="w-16 h-16 text-indigo-500 mb-6 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                    <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">The Clause</h2>
+                    <p class="text-2xl font-semibold text-gray-800 dark:text-gray-200 leading-relaxed italic border-l-4 border-indigo-500 pl-6 text-left w-full">
+                        "{{ concept.clause }}"
+                    </p>
+                    <div class="mt-8 px-6 py-2 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full font-medium text-sm animate-pulse flex items-center gap-2">
+                        Click to Reveal Meaning
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
+                    </div>
+                </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">What it means</h2>
-                <p class="text-gray-700 leading-relaxed text-lg">
-                    {{ concept.explanation }}
-                </p>
-            </div>
+                <!-- Back Side -->
+                <div class="flashcard-face flashcard-back bg-gradient-to-br from-indigo-600 to-purple-700 p-10 rounded-3xl shadow-xl flex flex-col justify-center text-white overflow-y-auto">
+                    <div class="space-y-6">
+                        <div>
+                            <h2 class="text-xs font-bold text-indigo-200 uppercase tracking-widest mb-3">What it means</h2>
+                            <p class="text-xl leading-relaxed font-medium">
+                                {{ concept.explanation }}
+                            </p>
+                        </div>
+                        <div class="bg-black/20 p-6 rounded-2xl backdrop-blur-sm border border-white/10">
+                            <h2 class="text-xs font-bold text-purple-200 uppercase tracking-widest mb-3">Example</h2>
+                            <p class="text-lg leading-relaxed text-indigo-50">
+                                {{ concept.example }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="bg-indigo-600 p-8 rounded-2xl shadow-xl shadow-indigo-200 text-white">
-                <h2 class="text-sm font-bold text-indigo-200 uppercase tracking-widest mb-4">Example</h2>
-                <p class="text-lg leading-relaxed">
-                    {{ concept.example }}
-                </p>
             </div>
         </div>
 
@@ -71,6 +133,55 @@
             <p class="text-gray-500 text-sm">Come back tomorrow for a new legal concept!</p>
         </div>
     </main>
+
+    <script>
+        function setupThemeToggle(btnId, darkIconId, lightIconId) {
+            var themeToggleBtn = document.getElementById(btnId);
+            var themeToggleDarkIcon = document.getElementById(darkIconId);
+            var themeToggleLightIcon = document.getElementById(lightIconId);
+
+            if (!themeToggleBtn || !themeToggleDarkIcon || !themeToggleLightIcon) return;
+
+            // Change the icons inside the button based on previous settings
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                // toggle icons inside button
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                // if set via local storage previously
+                if (localStorage.getItem('theme')) {
+                    if (localStorage.getItem('theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+
+                // if NOT set via local storage previously
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupThemeToggle('theme-toggle', 'theme-toggle-dark-icon', 'theme-toggle-light-icon');
+            setupThemeToggle('theme-toggle-mobile', 'theme-toggle-dark-icon-mobile', 'theme-toggle-light-icon-mobile');
+        });
+    </script>
 </body>
 
 </html>

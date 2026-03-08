@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analysis Result - LegalClauseAI</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232D11E9'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
@@ -49,24 +51,38 @@
             }
         }
     </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
 
-<body class="bg-gray-50 flex flex-col min-h-screen">
+<body
+    class="bg-gray-50 dark:bg-[oklch(14.1%_0.005_285.823)] flex flex-col min-h-screen dark:bg-[oklch(14.1%_0.005_285.823)] dark:text-gray-100 transition-colors duration-200">
 
     <!-- Hidden element to store original text safely -->
     <div id="originalTextData" data-text="{{ original_text if original_text else '' }}" class="hidden"></div>
 
     <!-- Top Banner -->
-    <div class="text-sm text-white w-full z-50 relative">
+    <div class="text-sm text-white w-full sticky top-0 z-50">
         <div
-            class="flex flex-wrap items-center justify-center w-full py-1 font-medium text-sm text-white text-center bg-gradient-to-b from-orange-500 to-orange-600">
+            class="flex flex-wrap items-center justify-center w-full py-1.5 font-medium text-sm text-white text-center bg-gradient-to-r from-indigo-600 to-violet-600">
             <p>LegalClauseAI - Simplify Legal Language</p>
-
         </div>
 
         <!-- Navigation -->
         <nav
-            class="relative flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-3 bg-white text-gray-900 transition-all shadow overflow-visible">
+            class="relative flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-3 bg-white/70 dark:bg-[#0b0c10]/70 backdrop-blur-md border-b border-gray-200/50 dark:border-white/5 text-gray-900 dark:text-gray-100 transition-all shadow-sm overflow-visible">
             <a href="https://prebuiltui.com">
                 <svg width="209" height="30" viewBox="0 0 209 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -80,7 +96,7 @@
                         fill="#2D11E9" stroke="#2D11E9" stroke-width="0.666346" />
                     <path
                         d="M34.225 19.975H39.975V22.75H30.725V5.30003H34.225V19.975ZM55.0746 15.525C55.0746 16.025 55.0413 16.475 54.9746 16.875H44.8496C44.9329 17.875 45.2829 18.6584 45.8996 19.225C46.5163 19.7917 47.2746 20.075 48.1746 20.075C49.4746 20.075 50.3996 19.5167 50.9496 18.4H54.7246C54.3246 19.7334 53.5579 20.8334 52.4246 21.7C51.2913 22.55 49.8996 22.975 48.2496 22.975C46.9163 22.975 45.7163 22.6834 44.6496 22.1C43.5996 21.5 42.7746 20.6584 42.1746 19.575C41.5913 18.4917 41.2996 17.2417 41.2996 15.825C41.2996 14.3917 41.5913 13.1334 42.1746 12.05C42.7579 10.9667 43.5746 10.1334 44.6246 9.55003C45.6746 8.9667 46.8829 8.67503 48.2496 8.67503C49.5663 8.67503 50.7413 8.95836 51.7746 9.52503C52.8246 10.0917 53.6329 10.9 54.1996 11.95C54.7829 12.9834 55.0746 14.175 55.0746 15.525ZM51.4496 14.525C51.4329 13.625 51.1079 12.9084 50.4746 12.375C49.8413 11.825 49.0663 11.55 48.1496 11.55C47.2829 11.55 46.5496 11.8167 45.9496 12.35C45.3663 12.8667 45.0079 13.5917 44.8746 14.525H51.4496ZM63.0543 8.67503C64.0876 8.67503 64.996 8.88336 65.7793 9.30003C66.5626 9.70003 67.1793 10.225 67.6293 10.875V8.90003H71.1543V22.85C71.1543 24.1334 70.896 25.275 70.3793 26.275C69.8626 27.2917 69.0876 28.0917 68.0543 28.675C67.021 29.275 65.771 29.575 64.3043 29.575C62.3376 29.575 60.721 29.1167 59.4543 28.2C58.2043 27.2834 57.496 26.0334 57.3293 24.45H60.8043C60.9876 25.0834 61.3793 25.5834 61.9793 25.95C62.596 26.3334 63.3376 26.525 64.2043 26.525C65.221 26.525 66.046 26.2167 66.6793 25.6C67.3126 25 67.6293 24.0834 67.6293 22.85V20.7C67.1793 21.35 66.5543 21.8917 65.7543 22.325C64.971 22.7584 64.071 22.975 63.0543 22.975C61.8876 22.975 60.821 22.675 59.8543 22.075C58.8876 21.475 58.121 20.6334 57.5543 19.55C57.0043 18.45 56.7293 17.1917 56.7293 15.775C56.7293 14.375 57.0043 13.1334 57.5543 12.05C58.121 10.9667 58.8793 10.1334 59.8293 9.55003C60.796 8.9667 61.871 8.67503 63.0543 8.67503ZM67.6293 15.825C67.6293 14.975 67.4626 14.25 67.1293 13.65C66.796 13.0334 66.346 12.5667 65.7793 12.25C65.2126 11.9167 64.6043 11.75 63.9543 11.75C63.3043 11.75 62.7043 11.9084 62.1543 12.225C61.6043 12.5417 61.1543 13.0084 60.8043 13.625C60.471 14.225 60.3043 14.9417 60.3043 15.775C60.3043 16.6084 60.471 17.3417 60.8043 17.975C61.1543 18.5917 61.6043 19.0667 62.1543 19.4C62.721 19.7334 63.321 19.9 63.9543 19.9C64.6043 19.9 65.2126 19.7417 65.7793 19.425C66.346 19.0917 66.796 18.625 67.1293 18.025C67.4626 17.4084 67.6293 16.675 67.6293 15.825ZM73.6727 15.775C73.6727 14.375 73.9477 13.1334 74.4977 12.05C75.0643 10.9667 75.8227 10.1334 76.7727 9.55003C77.7393 8.9667 78.8143 8.67503 79.9977 8.67503C81.031 8.67503 81.931 8.88336 82.6977 9.30003C83.481 9.7167 84.106 10.2417 84.5727 10.875V8.90003H88.0977V22.75H84.5727V20.725C84.1227 21.375 83.4977 21.9167 82.6977 22.35C81.9143 22.7667 81.006 22.975 79.9727 22.975C78.806 22.975 77.7393 22.675 76.7727 22.075C75.8227 21.475 75.0643 20.6334 74.4977 19.55C73.9477 18.45 73.6727 17.1917 73.6727 15.775ZM84.5727 15.825C84.5727 14.975 84.406 14.25 84.0727 13.65C83.7393 13.0334 83.2893 12.5667 82.7227 12.25C82.156 11.9167 81.5477 11.75 80.8977 11.75C80.2477 11.75 79.6477 11.9084 79.0977 12.225C78.5477 12.5417 78.0977 13.0084 77.7477 13.625C77.4143 14.225 77.2477 14.9417 77.2477 15.775C77.2477 16.6084 77.4143 17.3417 77.7477 17.975C78.0977 18.5917 78.5477 19.0667 79.0977 19.4C79.6643 19.7334 80.2643 19.9 80.8977 19.9C81.5477 19.9 82.156 19.7417 82.7227 19.425C83.2893 19.0917 83.7393 18.625 84.0727 18.025C84.406 17.4084 84.5727 16.675 84.5727 15.825ZM95.016 4.25003V22.75H91.516V4.25003H95.016ZM97.624 14C97.624 12.2834 98.0074 10.75 98.774 9.40003C99.5574 8.03336 100.616 6.97503 101.949 6.22503C103.299 5.45836 104.807 5.07503 106.474 5.07503C108.424 5.07503 110.132 5.57503 111.599 6.57503C113.066 7.57503 114.091 8.95836 114.674 10.725H110.649C110.249 9.8917 109.682 9.2667 108.949 8.85003C108.232 8.43336 107.399 8.22503 106.449 8.22503C105.432 8.22503 104.524 8.4667 103.724 8.95003C102.941 9.4167 102.324 10.0834 101.874 10.95C101.441 11.8167 101.224 12.8334 101.224 14C101.224 15.15 101.441 16.1667 101.874 17.05C102.324 17.9167 102.941 18.5917 103.724 19.075C104.524 19.5417 105.432 19.775 106.449 19.775C107.399 19.775 108.232 19.5667 108.949 19.15C109.682 18.7167 110.249 18.0834 110.649 17.25H114.674C114.091 19.0334 113.066 20.425 111.599 21.425C110.149 22.4084 108.441 22.9 106.474 22.9C104.807 22.9 103.299 22.525 101.949 21.775C100.616 21.0084 99.5574 19.95 98.774 18.6C98.0074 17.25 97.624 15.7167 97.624 14ZM121.163 4.25003V22.75H117.663V4.25003H121.163ZM123.721 15.775C123.721 14.375 123.996 13.1334 124.546 12.05C125.113 10.9667 125.871 10.1334 126.821 9.55003C127.788 8.9667 128.863 8.67503 130.046 8.67503C131.08 8.67503 131.98 8.88336 132.746 9.30003C133.53 9.7167 134.155 10.2417 134.621 10.875V8.90003H138.146V22.75H134.621V20.725C134.171 21.375 133.546 21.9167 132.746 22.35C131.963 22.7667 131.055 22.975 130.021 22.975C128.855 22.975 127.788 22.675 126.821 22.075C125.871 21.475 125.113 20.6334 124.546 19.55C123.996 18.45 123.721 17.1917 123.721 15.775ZM134.621 15.825C134.621 14.975 134.455 14.25 134.121 13.65C133.788 13.0334 133.338 12.5667 132.771 12.25C132.205 11.9167 131.596 11.75 130.946 11.75C130.296 11.75 129.696 11.9084 129.146 12.225C128.596 12.5417 128.146 13.0084 127.796 13.625C127.463 14.225 127.296 14.9417 127.296 15.775C127.296 16.6084 127.463 17.3417 127.796 17.975C128.146 18.5917 128.596 19.0667 129.146 19.4C129.713 19.7334 130.313 19.9 130.946 19.9C131.596 19.9 132.205 19.7417 132.771 19.425C133.338 19.0917 133.788 18.625 134.121 18.025C134.455 17.4084 134.621 16.675 134.621 15.825ZM154.64 8.90003V22.75H151.115V21C150.665 21.6 150.073 22.075 149.34 22.425C148.623 22.7584 147.84 22.925 146.99 22.925C145.907 22.925 144.948 22.7 144.115 22.25C143.282 21.7834 142.623 21.1084 142.14 20.225C141.673 19.325 141.44 18.2584 141.44 17.025V8.90003H144.94V16.525C144.94 17.625 145.215 18.475 145.765 19.075C146.315 19.6584 147.065 19.95 148.015 19.95C148.982 19.95 149.74 19.6584 150.29 19.075C150.84 18.475 151.115 17.625 151.115 16.525V8.90003H154.64ZM163.393 22.975C162.26 22.975 161.243 22.775 160.343 22.375C159.443 21.9584 158.726 21.4 158.193 20.7C157.676 20 157.393 19.225 157.343 18.375H160.868C160.935 18.9084 161.193 19.35 161.643 19.7C162.11 20.05 162.685 20.225 163.368 20.225C164.035 20.225 164.551 20.0917 164.918 19.825C165.301 19.5584 165.493 19.2167 165.493 18.8C165.493 18.35 165.26 18.0167 164.793 17.8C164.343 17.5667 163.618 17.3167 162.618 17.05C161.585 16.8 160.735 16.5417 160.068 16.275C159.418 16.0084 158.851 15.6 158.368 15.05C157.901 14.5 157.668 13.7584 157.668 12.825C157.668 12.0584 157.885 11.3584 158.318 10.725C158.768 10.0917 159.401 9.5917 160.218 9.22503C161.051 8.85836 162.026 8.67503 163.143 8.67503C164.793 8.67503 166.11 9.0917 167.093 9.92503C168.076 10.7417 168.618 11.85 168.718 13.25H165.368C165.318 12.7 165.085 12.2667 164.668 11.95C164.268 11.6167 163.726 11.45 163.043 11.45C162.41 11.45 161.918 11.5667 161.568 11.8C161.235 12.0334 161.068 12.3584 161.068 12.775C161.068 13.2417 161.301 13.6 161.768 13.85C162.235 14.0834 162.96 14.325 163.943 14.575C164.943 14.825 165.768 15.0834 166.418 15.35C167.068 15.6167 167.626 16.0334 168.093 16.6C168.576 17.15 168.826 17.8834 168.843 18.8C168.843 19.6 168.618 20.3167 168.168 20.95C167.735 21.5834 167.101 22.0834 166.268 22.45C165.451 22.8 164.493 22.975 163.393 22.975ZM184.591 15.525C184.591 16.025 184.558 16.475 184.491 16.875H174.366C174.45 17.875 174.8 18.6584 175.416 19.225C176.033 19.7917 176.791 20.075 177.691 20.075C178.991 20.075 179.916 19.5167 180.466 18.4H184.241C183.841 19.7334 183.075 20.8334 181.941 21.7C180.808 22.55 179.416 22.975 177.766 22.975C176.433 22.975 175.233 22.6834 174.166 22.1C173.116 21.5 172.291 20.6584 171.691 19.575C171.108 18.4917 170.816 17.2417 170.816 15.825C170.816 14.3917 171.108 13.1334 171.691 12.05C172.275 10.9667 173.091 10.1334 174.141 9.55003C175.191 8.9667 176.4 8.67503 177.766 8.67503C179.083 8.67503 180.258 8.95836 181.291 9.52503C182.341 10.0917 183.15 10.9 183.716 11.95C184.3 12.9834 184.591 14.175 184.591 15.525ZM180.966 14.525C180.95 13.625 180.625 12.9084 179.991 12.375C179.358 11.825 178.583 11.55 177.666 11.55C176.8 11.55 176.066 11.8167 175.466 12.35C174.883 12.8667 174.525 13.5917 174.391 14.525H180.966ZM197.846 19.425H190.896L189.746 22.75H186.071L192.346 5.27503H196.421L202.696 22.75H198.996L197.846 19.425ZM196.896 16.625L194.371 9.32503L191.846 16.625H196.896ZM208.541 5.30003V22.75H205.041V5.30003H208.541Z"
-                        fill="black" />
+                        class="fill-black dark:fill-white" />
                 </svg>
             </a>
 
@@ -92,12 +108,27 @@
                 <li><a href="{{ url_for('chat') }}" class="hover:text-indigo-600 transition-colors">Chat</a></li>
                 <li><a href="{{ url_for('news') }}" class="hover:text-indigo-600 transition-colors">News Feed</a></li>
             </ul>
+            <!-- Theme Toggle Desktop -->
+            <button id="theme-toggle" type="button"
+                class="ml-4 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg text-sm p-2.5">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                        fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+
 
             {% if current_user.is_authenticated %}
             <div class="hs-dropdown relative inline-flex ml-6 hidden md:flex">
                 {% set initials = (current_user.email.split('@')[0][:2] if current_user.email else 'AC')|upper %}
                 <button type="button"
-                    class="hs-dropdown-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none"
+                    class="hs-dropdown-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 dark:border-white/5 bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 text-gray-800 dark:text-gray-200 shadow hover:bg-gray-50 dark:hover:bg-[oklch(14.1%_0.005_285.823)] focus:outline-none"
                     aria-haspopup="true" aria-expanded="false">
                     <span
                         class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-700 text-xs font-semibold text-white">
@@ -108,11 +139,12 @@
                         <path d="m6 9 6 6 6-6" />
                     </svg>
                 </button>
-                <div class="hs-dropdown-menu hidden absolute right-0 top-full mt-2 w-56 z-50 bg-white shadow-lg rounded-lg border border-gray-200"
+                <div class="hs-dropdown-menu hidden absolute right-0 top-full mt-2 w-56 z-50 bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 shadow-lg dark:shadow-[oklch(14.1%_0.005_285.823)] rounded-lg border border-gray-200 dark:border-white/5"
                     role="menu" aria-orientation="vertical" aria-hidden="true">
                     <div class="py-3 px-4 border-b border-gray-100">
                         <p class="text-xs text-gray-500">Signed in as</p>
-                        <p class="text-sm font-medium text-gray-800 truncate">{{ current_user.email }}</p>
+                        <p class="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">{{ current_user.email
+                            }}</p>
                     </div>
                     <div class="p-1">
                         <a href="{{ url_for('home') }}"
@@ -124,7 +156,7 @@
             </div>
             {% else %}
             <a href="{{ url_for('login') }}"
-                class="hidden md:inline bg-white hover:bg-gray-50 border border-gray-300 ml-4 px-5 py-2 rounded-full text-sm transition-all">
+                class="hidden md:inline bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 hover:bg-gray-50 dark:hover:bg-[oklch(14.1%_0.005_285.823)] border border-gray-300 dark:border-white/10 ml-4 px-5 py-2 rounded-full text-sm transition-all">
                 Login
             </a>
             {% endif %}
@@ -137,7 +169,8 @@
                 </svg>
             </button>
 
-            <div class="mobile-menu absolute top-full left-0 w-full bg-white shadow-sm p-6 hidden md:hidden z-50">
+            <div
+                class="mobile-menu absolute top-full left-0 w-full bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] p-6 hidden md:hidden z-50">
                 <ul class="flex flex-col space-y-4 text-lg">
                     <li><a href="{{ url_for('home') }}" class="text-sm">Home</a></li>
                     <li><a href="{{ url_for('learning') }}" class="text-sm">Learning</a></li>
@@ -145,6 +178,24 @@
                     <li><a href="{{ url_for('chat') }}" class="text-sm">Chat</a></li>
                     <li><a href="{{ url_for('news') }}" class="text-sm">News Feed</a></li>
                 </ul>
+                <!-- Theme Toggle Mobile -->
+                <div class="mt-4 border-t border-gray-100 dark:border-gray-700 pt-4">
+                    <button id="theme-toggle-mobile" type="button"
+                        class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg p-2.5 w-full">
+                        <svg id="theme-toggle-dark-icon-mobile" class="hidden w-5 h-5" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg id="theme-toggle-light-icon-mobile" class="hidden w-5 h-5" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                fill-rule="evenodd" clip-rule="evenodd"></path>
+                        </svg>
+                        <span id="theme-toggle-text-mobile">Toggle Theme</span>
+                    </button>
+                </div>
+
                 {% if current_user.is_authenticated %}
                 <div class="mt-4">
                     {% set initials = (current_user.email.split('@')[0][:2] if current_user.email else 'AC')|upper %}
@@ -153,14 +204,14 @@
                             class="inline-flex items-center justify-center size-10 rounded-full bg-gray-700 text-sm font-semibold text-white">
                             {{ initials }}
                         </span>
-                        <span class="text-gray-800 text-sm">{{ current_user.email }}</span>
+                        <span class="text-gray-800 dark:text-gray-200 text-sm">{{ current_user.email }}</span>
                     </div>
                     <a href="{{ url_for('logout') }}"
                         class="block mt-2 text-sm py-2 px-3 rounded-lg bg-red-50 text-red-600">Logout</a>
                 </div>
                 {% else %}
                 <a href="{{ url_for('login') }}"
-                    class="block bg-white text-gray-600 border border-gray-300 mt-6 text-sm hover:bg-gray-50 w-40 h-11 rounded-full flex items-center justify-center">
+                    class="block bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 text-gray-600 dark:text-gray-400 dark:text-gray-400 dark:text-gray-400 border border-gray-300 dark:border-white/10 mt-6 text-sm hover:bg-gray-50 dark:hover:bg-[oklch(14.1%_0.005_285.823)] w-40 h-11 rounded-full flex items-center justify-center">
                     Login
                 </a>
                 {% endif %}
@@ -172,20 +223,23 @@
     <div class="flex-grow relative overflow-hidden flex flex-col items-center justify-start py-12 px-4 sm:px-6 lg:px-8">
         <!-- Background Elements -->
         <div
-            class="w-[520px] h-[520px] top-10 left-1/2 -translate-x-1/2 rounded-full absolute blur-[300px] -z-10 bg-[#FBFFE1]/70 pointer-events-none">
+            class="w-[520px] h-[520px] top-10 left-1/2 -translate-x-1/2 rounded-full absolute blur-[300px] -z-10 bg-[#FBFFE1]/70 dark:hidden pointer-events-none">
         </div>
 
         <div class="w-full max-w-4xl">
             <div class="text-center mb-8">
-                <h1 class="text-3xl md:text-4xl font-semibold text-gray-900 mb-2">Analysis Result</h1>
-                <p class="text-gray-600">Here is the simplified breakdown of your legal document.</p>
+                <h1
+                    class="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 mb-2">
+                    Analysis Result</h1>
+                <p class="text-gray-600 dark:text-gray-400 dark:text-gray-400 dark:text-gray-400">Here is the simplified
+                    breakdown of your legal document.</p>
             </div>
 
             <div
-                class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden relative flex flex-col max-h-[80vh]">
+                class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 rounded-2xl shadow-xl border border-gray-100 overflow-hidden relative flex flex-col max-h-[80vh]">
                 <!-- Card Header / Toolbar -->
                 <div
-                    class="bg-gray-50/80 backdrop-blur-sm border-b border-gray-200 p-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-10">
+                    class="bg-gray-50 dark:bg-[oklch(14.1%_0.005_285.823)] backdrop-blur-sm border-b border-gray-200 dark:border-white/5 p-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-10">
                     <div class="flex items-center gap-2">
                         <div class="bg-green-100 p-2 rounded-lg">
                             <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,12 +247,13 @@
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        <span id="statusText" class="font-medium text-gray-700">Initializing...</span>
+                        <span id="statusText"
+                            class="font-medium text-gray-700 dark:text-gray-300">Initializing...</span>
                     </div>
 
                     <div class="flex items-center gap-2">
                         <button onclick="speakText()" id="speakBtn"
-                            class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-colors">
+                            class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 rounded-lg transition-colors">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z">
@@ -207,7 +262,7 @@
                             Read Aloud
                         </button>
                         <button onclick="stopSpeaking()" id="stopBtn"
-                            class="hidden flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
+                            class="hidden flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 rounded-lg transition-colors">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -217,7 +272,7 @@
                             Stop
                         </button>
                         <button onclick="copyText()"
-                            class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                            class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
@@ -230,7 +285,7 @@
 
                 <!-- Content Area -->
                 <div id="resultContent"
-                    class="p-8 overflow-y-auto custom-scrollbar prose prose-indigo max-w-none text-gray-800 leading-relaxed min-h-[300px]">
+                    class="p-8 overflow-y-auto custom-scrollbar prose prose-indigo dark:prose-invert max-w-none text-gray-800 dark:text-gray-200 leading-relaxed min-h-[300px]">
 
                     <!-- Loading State -->
                     <div id="loadingState" class="flex flex-col items-center justify-center h-full py-10 space-y-4">
@@ -253,9 +308,10 @@
                 </div>
 
                 <!-- Card Footer -->
-                <div class="bg-gray-50 border-t border-gray-200 p-4 flex justify-between items-center">
+                <div
+                    class="bg-gray-50 dark:bg-[oklch(14.1%_0.005_285.823)] border-t border-gray-200 dark:border-white/5 p-4 flex justify-between items-center">
                     <a href="{{ url_for('upload') }}"
-                        class="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1 transition-colors">
+                        class="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 flex items-center gap-1 transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -272,16 +328,23 @@
     </div>
 
     <!-- Footer -->
-    <footer class="px-6 md:px-16 lg:px-24 xl:px-32 pt-12 w-full text-gray-500 bg-white border-t border-gray-100">
+    <footer
+        class="px-6 md:px-16 lg:px-24 xl:px-32 pt-12 w-full text-gray-500 bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 border-t border-gray-100">
         <div class="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500/30 pb-6">
             <div class="md:max-w-96">
-                <svg width="157" height="40" viewBox="0 0 157 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="209" height="30" viewBox="0 0 209 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
-                        d="M47.904 28.28q-1.54 0-2.744-.644a5.1 5.1 0 0 1-1.904-1.82q-.672-1.148-.672-2.604v-3.864q0-1.456.7-2.604a4.9 4.9 0 0 1 1.904-1.792q1.204-.672 2.716-.672 1.82 0 3.276.952a6.44 6.44 0 0 1 2.324 2.52q.868 1.567.868 3.556 0 1.96-.868 3.556a6.5 6.5 0 0 1-2.324 2.492q-1.456.924-3.276.924m-7.196 5.32V14.56h3.08v3.612l-.532 3.276.532 3.248V33.6zm6.692-8.232q1.12 0 1.96-.504a3.6 3.6 0 0 0 1.344-1.456q.504-.924.504-2.128t-.504-2.128a3.43 3.43 0 0 0-1.344-1.428q-.84-.532-1.96-.532t-1.988.532a3.43 3.43 0 0 0-1.344 1.428q-.476.924-.476 2.128t.476 2.128a3.6 3.6 0 0 0 1.344 1.456q.868.504 1.988.504M56.95 28V14.56h3.08V28zm3.08-7.476-1.064-.532q0-2.548 1.12-4.116 1.148-1.596 3.444-1.596 1.008 0 1.82.364.812.365 1.512 1.176l-2.016 2.072a2.1 2.1 0 0 0-.812-.56 3 3 0 0 0-1.036-.168q-1.287 0-2.128.812-.84.811-.84 2.548m14.156 7.756q-2.016 0-3.64-.896a7 7 0 0 1-2.548-2.52q-.924-1.596-.924-3.584t.924-3.556a6.87 6.87 0 0 1 2.492-2.52q1.596-.924 3.528-.924 1.876 0 3.304.868a6.05 6.05 0 0 1 2.268 2.38q.84 1.512.84 3.444 0 .336-.056.7a7 7 0 0 1-.112.756H69.23v-2.52h9.436l-1.148 1.008q-.056-1.232-.476-2.072a3 3 0 0 0-1.204-1.288q-.756-.448-1.876-.448-1.176 0-2.044.504a3.43 3.43 0 0 0-1.344 1.428q-.476.896-.476 2.156t.504 2.212 1.428 1.484q.924.504 2.128.504 1.037 0 1.904-.364a4 4 0 0 0 1.512-1.064l1.96 1.988a6.3 6.3 0 0 1-2.38 1.736 7.6 7.6 0 0 1-2.968.588m15.91 0q-1.54 0-2.745-.644a5.1 5.1 0 0 1-1.904-1.82q-.672-1.148-.672-2.604v-3.864q0-1.456.7-2.604a4.9 4.9 0 0 1 1.904-1.792q1.204-.672 2.716-.672 1.82 0 3.276.952a6.44 6.44 0 0 1 2.324 2.52q.869 1.567.868 3.556 0 1.96-.868 3.556a6.5 6.5 0 0 1-2.324 2.492q-1.455.924-3.276.924M82.898 28V7.84h3.08v10.024l-.532 3.248.532 3.276V28zm6.692-2.632q1.12 0 1.96-.504a3.6 3.6 0 0 0 1.344-1.456q.504-.924.504-2.128t-.504-2.128a3.43 3.43 0 0 0-1.344-1.428q-.84-.532-1.96-.532t-1.988.532a3.43 3.43 0 0 0-1.344 1.428q-.476.924-.476 2.128.001 1.204.476 2.128a3.6 3.6 0 0 0 1.344 1.456q.87.504 1.988.504m15.067 2.912q-1.708 0-3.052-.756a5.5 5.5 0 0 1-2.072-2.072q-.728-1.344-.728-3.08V14.56h3.08v7.672q0 .98.308 1.68.336.672.952 1.036.644.364 1.512.364 1.344 0 2.044-.784.728-.812.728-2.296V14.56h3.08v7.812q0 1.764-.756 3.108a5.3 5.3 0 0 1-2.044 2.072q-1.317.728-3.052.728m8.976-.28V14.56h3.08V28zm1.54-15.904q-.783 0-1.316-.532-.504-.532-.504-1.316t.504-1.316a1.8 1.8 0 0 1 1.316-.532q.813 0 1.316.532t.504 1.316q0 .784-.504 1.316t-1.316.532M120.169 28V7.84h3.08V28zm8.552 0V8.96h3.08V28zm-3.22-10.64v-2.8h9.52v2.8zm17.274 10.92q-1.708 0-3.052-.756a5.5 5.5 0 0 1-2.072-2.072q-.728-1.344-.728-3.08V14.56h3.08v7.672q0 .98.308 1.68.336.672.952 1.036.643.364 1.512.364 1.344 0 2.044-.784.728-.812.728-2.296V14.56h3.08v7.812q0 1.764-.756 3.108a5.3 5.3 0 0 1-2.044 2.072q-1.317.728-3.052.728m8.977-.28V14.56h3.08V28zm1.54-15.904q-.785 0-1.316-.532-.504-.532-.504-1.316t.504-1.316a1.8 1.8 0 0 1 1.316-.532q.812 0 1.316.532t.504 1.316-.504 1.316-1.316.532"
-                        fill="#000" />
+                        d="M3.70654 26.25L18.45 26.25C20.1302 26.25 20.9703 26.25 21.612 25.9231C22.1765 25.6354 22.6354 25.1765 22.923 24.612C23.25 23.9703 23.25 23.1302 23.25 21.45L23.25 11.3217C23.25 10.5992 23.25 10.2379 23.1695 9.89736C23.098 9.5954 22.9802 9.30634 22.8202 9.04051C22.6397 8.74069 22.3871 8.4824 21.882 7.96582L16.2382 2.19417C15.7173 1.66145 15.4569 1.39509 15.1512 1.20448C14.8803 1.03551 14.5841 0.910878 14.2739 0.835292C13.9239 0.75003 13.5514 0.75003 12.8063 0.75003L9.26633 0.750031L8.50654 0.750031C6.82639 0.750031 5.98631 0.750031 5.34457 1.07701C4.78009 1.36463 4.32114 1.82357 4.03352 2.38806C3.70654 3.02979 3.70654 3.87798 3.70654 5.57435"
+                        stroke="#2D11E9" stroke-width="1.5" stroke-linecap="round" />
                     <path
-                        d="m8.75 11.3 6.75 3.884 6.75-3.885M8.75 34.58v-7.755L2 22.939m27 0-6.75 3.885v7.754M2.405 15.408 15.5 22.954l13.095-7.546M15.5 38V22.939M29 28.915V16.962a2.98 2.98 0 0 0-1.5-2.585L17 8.4a3.01 3.01 0 0 0-3 0L3.5 14.377A3 3 0 0 0 2 16.962v11.953A2.98 2.98 0 0 0 3.5 31.5L14 37.477a3.01 3.01 0 0 0 3 0L27.5 31.5a3 3 0 0 0 1.5-2.585"
-                        stroke="#4F39F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        d="M14.4891 0.750031L14.4891 4.90949C14.4891 6.58965 14.4891 7.42973 14.8161 8.07146C15.1037 8.63595 15.5626 9.09489 16.1271 9.38251C16.7689 9.70949 17.6089 9.70949 19.2891 9.70949L23.25 9.70949"
+                        stroke="#2D11E9" stroke-width="1.5" />
+                    <path
+                        d="M8.61836 17.6527L7.49908 21.1411C7.3671 21.5525 6.78508 21.5525 6.6531 21.1411L5.53382 17.6527C5.40434 17.2491 5.09062 16.9312 4.68881 16.7964L1.25506 15.6442C0.851184 15.5086 0.851184 14.9374 1.25506 14.8018L4.68881 13.6496C5.09062 13.5148 5.40434 13.1969 5.53382 12.7933L6.6531 9.30485C6.78508 8.8935 7.3671 8.8935 7.49908 9.30485L8.61836 12.7933C8.74784 13.1969 9.06156 13.5148 9.46336 13.6496L12.8971 14.8018C13.301 14.9374 13.301 15.5086 12.8971 15.6442L9.46336 16.7964C9.06156 16.9312 8.74784 17.2491 8.61836 17.6527Z"
+                        fill="#2D11E9" stroke="#2D11E9" stroke-width="0.666346" />
+                    <path
+                        d="M34.225 19.975H39.975V22.75H30.725V5.30003H34.225V19.975ZM55.0746 15.525C55.0746 16.025 55.0413 16.475 54.9746 16.875H44.8496C44.9329 17.875 45.2829 18.6584 45.8996 19.225C46.5163 19.7917 47.2746 20.075 48.1746 20.075C49.4746 20.075 50.3996 19.5167 50.9496 18.4H54.7246C54.3246 19.7334 53.5579 20.8334 52.4246 21.7C51.2913 22.55 49.8996 22.975 48.2496 22.975C46.9163 22.975 45.7163 22.6834 44.6496 22.1C43.5996 21.5 42.7746 20.6584 42.1746 19.575C41.5913 18.4917 41.2996 17.2417 41.2996 15.825C41.2996 14.3917 41.5913 13.1334 42.1746 12.05C42.7579 10.9667 43.5746 10.1334 44.6246 9.55003C45.6746 8.9667 46.8829 8.67503 48.2496 8.67503C49.5663 8.67503 50.7413 8.95836 51.7746 9.52503C52.8246 10.0917 53.6329 10.9 54.1996 11.95C54.7829 12.9834 55.0746 14.175 55.0746 15.525ZM51.4496 14.525C51.4329 13.625 51.1079 12.9084 50.4746 12.375C49.8413 11.825 49.0663 11.55 48.1496 11.55C47.2829 11.55 46.5496 11.8167 45.9496 12.35C45.3663 12.8667 45.0079 13.5917 44.8746 14.525H51.4496ZM63.0543 8.67503C64.0876 8.67503 64.996 8.88336 65.7793 9.30003C66.5626 9.70003 67.1793 10.225 67.6293 10.875V8.90003H71.1543V22.85C71.1543 24.1334 70.896 25.275 70.3793 26.275C69.8626 27.2917 69.0876 28.0917 68.0543 28.675C67.021 29.275 65.771 29.575 64.3043 29.575C62.3376 29.575 60.721 29.1167 59.4543 28.2C58.2043 27.2834 57.496 26.0334 57.3293 24.45H60.8043C60.9876 25.0834 61.3793 25.5834 61.9793 25.95C62.596 26.3334 63.3376 26.525 64.2043 26.525C65.221 26.525 66.046 26.2167 66.6793 25.6C67.3126 25 67.6293 24.0834 67.6293 22.85V20.7C67.1793 21.35 66.5543 21.8917 65.7543 22.325C64.971 22.7584 64.071 22.975 63.0543 22.975C61.8876 22.975 60.821 22.675 59.8543 22.075C58.8876 21.475 58.121 20.6334 57.5543 19.55C57.0043 18.45 56.7293 17.1917 56.7293 15.775C56.7293 14.375 57.0043 13.1334 57.5543 12.05C58.121 10.9667 58.8793 10.1334 59.8293 9.55003C60.796 8.9667 61.871 8.67503 63.0543 8.67503ZM67.6293 15.825C67.6293 14.975 67.4626 14.25 67.1293 13.65C66.796 13.0334 66.346 12.5667 65.7793 12.25C65.2126 11.9167 64.6043 11.75 63.9543 11.75C63.3043 11.75 62.7043 11.9084 62.1543 12.225C61.6043 12.5417 61.1543 13.0084 60.8043 13.625C60.471 14.225 60.3043 14.9417 60.3043 15.775C60.3043 16.6084 60.471 17.3417 60.8043 17.975C61.1543 18.5917 61.6043 19.0667 62.1543 19.4C62.721 19.7334 63.321 19.9 63.9543 19.9C64.6043 19.9 65.2126 19.7417 65.7793 19.425C66.346 19.0917 66.796 18.625 67.1293 18.025C67.4626 17.4084 67.6293 16.675 67.6293 15.825ZM73.6727 15.775C73.6727 14.375 73.9477 13.1334 74.4977 12.05C75.0643 10.9667 75.8227 10.1334 76.7727 9.55003C77.7393 8.9667 78.8143 8.67503 79.9977 8.67503C81.031 8.67503 81.931 8.88336 82.6977 9.30003C83.481 9.7167 84.106 10.2417 84.5727 10.875V8.90003H88.0977V22.75H84.5727V20.725C84.1227 21.375 83.4977 21.9167 82.6977 22.35C81.9143 22.7667 81.006 22.975 79.9727 22.975C78.806 22.975 77.7393 22.675 76.7727 22.075C75.8227 21.475 75.0643 20.6334 74.4977 19.55C73.9477 18.45 73.6727 17.1917 73.6727 15.775ZM84.5727 15.825C84.5727 14.975 84.406 14.25 84.0727 13.65C83.7393 13.0334 83.2893 12.5667 82.7227 12.25C82.156 11.9167 81.5477 11.75 80.8977 11.75C80.2477 11.75 79.6477 11.9084 79.0977 12.225C78.5477 12.5417 78.0977 13.0084 77.7477 13.625C77.4143 14.225 77.2477 14.9417 77.2477 15.775C77.2477 16.6084 77.4143 17.3417 77.7477 17.975C78.0977 18.5917 78.5477 19.0667 79.0977 19.4C79.6643 19.7334 80.2643 19.9 80.8977 19.9C81.5477 19.9 82.156 19.7417 82.7227 19.425C83.2893 19.0917 83.7393 18.625 84.0727 18.025C84.406 17.4084 84.5727 16.675 84.5727 15.825ZM95.016 4.25003V22.75H91.516V4.25003H95.016ZM97.624 14C97.624 12.2834 98.0074 10.75 98.774 9.40003C99.5574 8.03336 100.616 6.97503 101.949 6.22503C103.299 5.45836 104.807 5.07503 106.474 5.07503C108.424 5.07503 110.132 5.57503 111.599 6.57503C113.066 7.57503 114.091 8.95836 114.674 10.725H110.649C110.249 9.8917 109.682 9.2667 108.949 8.85003C108.232 8.43336 107.399 8.22503 106.449 8.22503C105.432 8.22503 104.524 8.4667 103.724 8.95003C102.941 9.4167 102.324 10.0834 101.874 10.95C101.441 11.8167 101.224 12.8334 101.224 14C101.224 15.15 101.441 16.1667 101.874 17.05C102.324 17.9167 102.941 18.5917 103.724 19.075C104.524 19.5417 105.432 19.775 106.449 19.775C107.399 19.775 108.232 19.5667 108.949 19.15C109.682 18.7167 110.249 18.0834 110.649 17.25H114.674C114.091 19.0334 113.066 20.425 111.599 21.425C110.149 22.4084 108.441 22.9 106.474 22.9C104.807 22.9 103.299 22.525 101.949 21.775C100.616 21.0084 99.5574 19.95 98.774 18.6C98.0074 17.25 97.624 15.7167 97.624 14ZM121.163 4.25003V22.75H117.663V4.25003H121.163ZM123.721 15.775C123.721 14.375 123.996 13.1334 124.546 12.05C125.113 10.9667 125.871 10.1334 126.821 9.55003C127.788 8.9667 128.863 8.67503 130.046 8.67503C131.08 8.67503 131.98 8.88336 132.746 9.30003C133.53 9.7167 134.155 10.2417 134.621 10.875V8.90003H138.146V22.75H134.621V20.725C134.171 21.375 133.546 21.9167 132.746 22.35C131.963 22.7667 131.055 22.975 130.021 22.975C128.855 22.975 127.788 22.675 126.821 22.075C125.871 21.475 125.113 20.6334 124.546 19.55C123.996 18.45 123.721 17.1917 123.721 15.775ZM134.621 15.825C134.621 14.975 134.455 14.25 134.121 13.65C133.788 13.0334 133.338 12.5667 132.771 12.25C132.205 11.9167 131.596 11.75 130.946 11.75C130.296 11.75 129.696 11.9084 129.146 12.225C128.596 12.5417 128.146 13.0084 127.796 13.625C127.463 14.225 127.296 14.9417 127.296 15.775C127.296 16.6084 127.463 17.3417 127.796 17.975C128.146 18.5917 128.596 19.0667 129.146 19.4C129.713 19.7334 130.313 19.9 130.946 19.9C131.596 19.9 132.205 19.7417 132.771 19.425C133.338 19.0917 133.788 18.625 134.121 18.025C134.455 17.4084 134.621 16.675 134.621 15.825ZM154.64 8.90003V22.75H151.115V21C150.665 21.6 150.073 22.075 149.34 22.425C148.623 22.7584 147.84 22.925 146.99 22.925C145.907 22.925 144.948 22.7 144.115 22.25C143.282 21.7834 142.623 21.1084 142.14 20.225C141.673 19.325 141.44 18.2584 141.44 17.025V8.90003H144.94V16.525C144.94 17.625 145.215 18.475 145.765 19.075C146.315 19.6584 147.065 19.95 148.015 19.95C148.982 19.95 149.74 19.6584 150.29 19.075C150.84 18.475 151.115 17.625 151.115 16.525V8.90003H154.64ZM163.393 22.975C162.26 22.975 161.243 22.775 160.343 22.375C159.443 21.9584 158.726 21.4 158.193 20.7C157.676 20 157.393 19.225 157.343 18.375H160.868C160.935 18.9084 161.193 19.35 161.643 19.7C162.11 20.05 162.685 20.225 163.368 20.225C164.035 20.225 164.551 20.0917 164.918 19.825C165.301 19.5584 165.493 19.2167 165.493 18.8C165.493 18.35 165.26 18.0167 164.793 17.8C164.343 17.5667 163.618 17.3167 162.618 17.05C161.585 16.8 160.735 16.5417 160.068 16.275C159.418 16.0084 158.851 15.6 158.368 15.05C157.901 14.5 157.668 13.7584 157.668 12.825C157.668 12.0584 157.885 11.3584 158.318 10.725C158.768 10.0917 159.401 9.5917 160.218 9.22503C161.051 8.85836 162.026 8.67503 163.143 8.67503C164.793 8.67503 166.11 9.0917 167.093 9.92503C168.076 10.7417 168.618 11.85 168.718 13.25H165.368C165.318 12.7 165.085 12.2667 164.668 11.95C164.268 11.6167 163.726 11.45 163.043 11.45C162.41 11.45 161.918 11.5667 161.568 11.8C161.235 12.0334 161.068 12.3584 161.068 12.775C161.068 13.2417 161.301 13.6 161.768 13.85C162.235 14.0834 162.96 14.325 163.943 14.575C164.943 14.825 165.768 15.0834 166.418 15.35C167.068 15.6167 167.626 16.0334 168.093 16.6C168.576 17.15 168.826 17.8834 168.843 18.8C168.843 19.6 168.618 20.3167 168.168 20.95C167.735 21.5834 167.101 22.0834 166.268 22.45C165.451 22.8 164.493 22.975 163.393 22.975ZM184.591 15.525C184.591 16.025 184.558 16.475 184.491 16.875H174.366C174.45 17.875 174.8 18.6584 175.416 19.225C176.033 19.7917 176.791 20.075 177.691 20.075C178.991 20.075 179.916 19.5167 180.466 18.4H184.241C183.841 19.7334 183.075 20.8334 181.941 21.7C180.808 22.55 179.416 22.975 177.766 22.975C176.433 22.975 175.233 22.6834 174.166 22.1C173.116 21.5 172.291 20.6584 171.691 19.575C171.108 18.4917 170.816 17.2417 170.816 15.825C170.816 14.3917 171.108 13.1334 171.691 12.05C172.275 10.9667 173.091 10.1334 174.141 9.55003C175.191 8.9667 176.4 8.67503 177.766 8.67503C179.083 8.67503 180.258 8.95836 181.291 9.52503C182.341 10.0917 183.15 10.9 183.716 11.95C184.3 12.9834 184.591 14.175 184.591 15.525ZM180.966 14.525C180.95 13.625 180.625 12.9084 179.991 12.375C179.358 11.825 178.583 11.55 177.666 11.55C176.8 11.55 176.066 11.8167 175.466 12.35C174.883 12.8667 174.525 13.5917 174.391 14.525H180.966ZM197.846 19.425H190.896L189.746 22.75H186.071L192.346 5.27503H196.421L202.696 22.75H198.996L197.846 19.425ZM196.896 16.625L194.371 9.32503L191.846 16.625H196.896ZM208.541 5.30003V22.75H205.041V5.30003H208.541Z"
+                        class="fill-black dark:fill-white" />
                 </svg>
                 <p class="mt-6 text-sm">
                     LegalClauseAI makes law simple and accessible — understand contracts, chat with the Indian
@@ -290,7 +353,7 @@
             </div>
             <div class="flex-1 flex flex-col sm:flex-row items-start md:justify-end gap-10 sm:gap-20">
                 <div>
-                    <h2 class="font-semibold mb-5 text-gray-800">Company</h2>
+                    <h2 class="font-semibold mb-5 text-gray-800 dark:text-gray-200">Company</h2>
                     <ul class="text-sm space-y-2">
                         <li><a href="#" class="hover:text-indigo-600 transition-colors">Home</a></li>
                         <li><a href="#" class="hover:text-indigo-600 transition-colors">About us</a></li>
@@ -299,7 +362,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h2 class="font-semibold mb-5 text-gray-800">Get in touch</h2>
+                    <h2 class="font-semibold mb-5 text-gray-800 dark:text-gray-200">Get in touch</h2>
                     <div class="text-sm space-y-2">
                         <p>+1-212-456-7890</p>
                         <p>contact@example.com</p>
@@ -478,6 +541,55 @@
                 console.error('Failed to copy: ', err);
             });
         }
+    </script>
+
+    <script>
+        function setupThemeToggle(btnId, darkIconId, lightIconId) {
+            var themeToggleBtn = document.getElementById(btnId);
+            var themeToggleDarkIcon = document.getElementById(darkIconId);
+            var themeToggleLightIcon = document.getElementById(lightIconId);
+
+            if (!themeToggleBtn || !themeToggleDarkIcon || !themeToggleLightIcon) return;
+
+            // Change the icons inside the button based on previous settings
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function () {
+                // toggle icons inside button
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                // if set via local storage previously
+                if (localStorage.getItem('theme')) {
+                    if (localStorage.getItem('theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+
+                    // if NOT set via local storage previously
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupThemeToggle('theme-toggle', 'theme-toggle-dark-icon', 'theme-toggle-light-icon');
+            setupThemeToggle('theme-toggle-mobile', 'theme-toggle-dark-icon-mobile', 'theme-toggle-light-icon-mobile');
+        });
     </script>
 </body>
 

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam Preparation – LegalClause AI</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232D11E9'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -12,11 +13,43 @@
         * {
             font-family: 'Poppins', sans-serif;
         }
+
+        /* Skeleton Animation */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+
+        .dark .skeleton {
+            background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+        }
     </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex flex-col">
-    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white shadow-sm">
+<body class="bg-gray-50 dark:bg-[oklch(14.1%_0.005_285.823)] min-h-screen flex flex-col dark:bg-[oklch(14.1%_0.005_285.823)] dark:text-gray-100 transition-colors duration-200">
+    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
         <a href="{{ url_for('learning') }}" class="flex items-center gap-2 text-indigo-600 font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -25,22 +58,22 @@
             </svg>
             Back to Dashboard
         </a>
-        <span class="text-gray-900 font-bold text-xl">Exam Prep Mode</span>
+        <span class="text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 font-bold text-xl">Exam Prep Mode</span>
         <div class="w-20"></div>
     </nav>
 
     <main class="flex-grow container mx-auto px-6 py-12 max-w-4xl">
         <div class="text-center mb-12">
-            <h1 class="text-3xl font-bold text-gray-900 mb-4">Generate Exam Answers</h1>
-            <p class="text-gray-600">Get structured, high-scoring answers for your law exams.</p>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 mb-4">Generate Exam Answers</h1>
+            <p class="text-gray-600 dark:text-gray-400 dark:text-gray-400 dark:text-gray-400">Get structured, high-scoring answers for your law exams.</p>
         </div>
 
-        <form id="exam-form" class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm space-y-6">
+        <form id="exam-form" class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-8 rounded-2xl border border-gray-100 shadow-sm space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Law / Act</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Law / Act</label>
                     <select name="law"
-                        class="w-full p-4 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                        class="w-full p-4 rounded-xl border border-gray-200 dark:border-white/5 outline-none focus:ring-2 focus:ring-indigo-500 transition-all bg-white dark:bg-gray-900 dark:text-white">
                         <option>Constitution of India</option>
                         <option>IPC</option>
                         <option>CrPC</option>
@@ -48,9 +81,9 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Marks</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Marks</label>
                     <select name="marks"
-                        class="w-full p-4 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                        class="w-full p-4 rounded-xl border border-gray-200 dark:border-white/5 outline-none focus:ring-2 focus:ring-indigo-500 transition-all bg-white dark:bg-gray-900 dark:text-white">
                         <option value="2">2 Marks (Short)</option>
                         <option value="5">5 Marks (Medium)</option>
                         <option value="10">10 Marks (Long)</option>
@@ -58,9 +91,9 @@
                 </div>
             </div>
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Topic / Question</label>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Topic / Question</label>
                 <input type="text" name="topic" placeholder="e.g. Fundamental Rights, Section 302, etc."
-                    class="w-full p-4 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                    class="w-full p-4 rounded-xl border border-gray-200 dark:border-white/5 outline-none focus:ring-2 focus:ring-indigo-500 transition-all bg-white dark:bg-gray-900 dark:text-white"
                     required>
             </div>
             <button type="submit"
@@ -71,7 +104,7 @@
 
         <div id="exam-result" class="hidden mt-12 space-y-6">
             <div class="flex items-center justify-between">
-                <h2 class="text-xl font-bold text-gray-900">Structured Answer</h2>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100">Structured Answer</h2>
                 <button onclick="window.print()" class="text-indigo-600 font-medium flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
@@ -82,8 +115,35 @@
                 </button>
             </div>
             <div id="answer-content"
-                class="bg-white p-10 rounded-2xl border border-gray-100 shadow-sm prose prose-indigo max-w-none">
-                <!-- Answer will be injected here -->
+                class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-10 rounded-2xl border border-gray-100 shadow-sm prose prose-indigo dark:prose-invert max-w-none transition-opacity duration-300">
+                
+                <!-- Loading Skeleton -->
+                <div id="exam-loading" class="hidden space-y-6">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-12 rounded-full skeleton"></div>
+                        <div class="space-y-2">
+                            <div class="h-4 w-48 rounded skeleton"></div>
+                            <div class="h-3 w-32 rounded skeleton"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="h-4 w-full rounded skeleton"></div>
+                        <div class="h-4 w-[90%] rounded skeleton"></div>
+                        <div class="h-4 w-[95%] rounded skeleton"></div>
+                        <div class="h-4 w-[80%] rounded skeleton"></div>
+                    </div>
+                    
+                    <div class="space-y-3 pt-4">
+                        <div class="h-4 w-[40%] rounded skeleton mb-4"></div>
+                        <div class="h-4 w-full rounded skeleton"></div>
+                        <div class="h-4 w-[85%] rounded skeleton"></div>
+                        <div class="h-4 w-[90%] rounded skeleton"></div>
+                    </div>
+                </div>
+
+                <!-- Actual Answer -->
+                <div id="exam-text" class="hidden"></div>
             </div>
         </div>
     </main>
@@ -93,8 +153,18 @@
             e.preventDefault();
             const formData = new FormData(e.target);
             const submitBtn = e.target.querySelector('button');
+            const resultDiv = document.getElementById('exam-result');
+            const loadingDiv = document.getElementById('exam-loading');
+            const textDiv = document.getElementById('exam-text');
+            
             submitBtn.disabled = true;
             submitBtn.textContent = 'Generating Answer...';
+            
+            // Show skeleton
+            resultDiv.classList.remove('hidden');
+            loadingDiv.classList.remove('hidden');
+            textDiv.classList.add('hidden');
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
 
             try {
                 const response = await fetch('/api/learning/generate-exam-answer', {
@@ -108,26 +178,77 @@
                 });
                 const data = await response.json();
 
-                const resultDiv = document.getElementById('exam-result');
-                const contentDiv = document.getElementById('answer-content');
-
-                // Convert markdown-like structure to HTML (simple replacement for headings)
+                // Convert markdown-like structure to HTML
                 let formattedAnswer = data.answer
                     .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mb-4">$1</h1>')
-                    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-6 mb-3 text-indigo-700">$1</h2>')
+                    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-6 mb-3 text-indigo-700 dark:text-indigo-400">$1</h2>')
                     .replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold mt-4 mb-2">$1</h3>')
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                     .replace(/\n/g, '<br>');
 
-                contentDiv.innerHTML = formattedAnswer;
-                resultDiv.classList.remove('hidden');
-                resultDiv.scrollIntoView({ behavior: 'smooth' });
+                textDiv.innerHTML = formattedAnswer;
+                
+                // Hide skeleton, show actual text
+                loadingDiv.classList.add('hidden');
+                textDiv.classList.remove('hidden');
+                
             } catch (error) {
-                alert('Error generating answer. Please try again.');
+                loadingDiv.classList.add('hidden');
+                textDiv.classList.remove('hidden');
+                textDiv.innerHTML = '<p class="text-red-500 font-medium">Error generating answer. Please try again.</p>';
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Generate Answer';
             }
+        });
+    </script>
+
+    <script>
+        function setupThemeToggle(btnId, darkIconId, lightIconId) {
+            var themeToggleBtn = document.getElementById(btnId);
+            var themeToggleDarkIcon = document.getElementById(darkIconId);
+            var themeToggleLightIcon = document.getElementById(lightIconId);
+
+            if (!themeToggleBtn || !themeToggleDarkIcon || !themeToggleLightIcon) return;
+
+            // Change the icons inside the button based on previous settings
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                // toggle icons inside button
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                // if set via local storage previously
+                if (localStorage.getItem('theme')) {
+                    if (localStorage.getItem('theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+
+                // if NOT set via local storage previously
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupThemeToggle('theme-toggle', 'theme-toggle-dark-icon', 'theme-toggle-light-icon');
+            setupThemeToggle('theme-toggle-mobile', 'theme-toggle-dark-icon-mobile', 'theme-toggle-light-icon-mobile');
         });
     </script>
 </body>

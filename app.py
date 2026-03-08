@@ -217,22 +217,49 @@ def learning_law_view(law_name):
     # Sample data for Articles/Sections
     data = {
         'Constitution of India': [
+            {'id': 'Article 12', 'title': 'Definition of the State'},
             {'id': 'Article 14', 'title': 'Equality before law'},
+            {'id': 'Article 15', 'title': 'Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth'},
             {'id': 'Article 19', 'title': 'Protection of certain rights regarding freedom of speech'},
-            {'id': 'Article 21', 'title': 'Protection of life and personal liberty'}
+            {'id': 'Article 21', 'title': 'Protection of life and personal liberty'},
+            {'id': 'Article 32', 'title': 'Remedies for enforcement of rights conferred by this Part'},
+            {'id': 'Article 44', 'title': 'Uniform civil code for the citizens'},
+            {'id': 'Article 51A', 'title': 'Fundamental Duties'}
         ],
         'IPC': [
+            {'id': 'Section 124A', 'title': 'Sedition'},
+            {'id': 'Section 299', 'title': 'Culpable homicide'},
             {'id': 'Section 300', 'title': 'Murder'},
+            {'id': 'Section 354', 'title': 'Assault or criminal force to woman with intent to outrage her modesty'},
             {'id': 'Section 378', 'title': 'Theft'},
-            {'id': 'Section 420', 'title': 'Cheating and dishonestly inducing delivery of property'}
+            {'id': 'Section 390', 'title': 'Robbery'},
+            {'id': 'Section 420', 'title': 'Cheating and dishonestly inducing delivery of property'},
+            {'id': 'Section 498A', 'title': 'Husband or relative of husband of a woman subjecting her to cruelty'}
         ],
         'CrPC': [
             {'id': 'Section 41', 'title': 'When police may arrest without warrant'},
-            {'id': 'Section 154', 'title': 'Information in cognizable cases (FIR)'}
+            {'id': 'Section 46', 'title': 'How arrest made'},
+            {'id': 'Section 144', 'title': 'Power to issue order in urgent cases of nuisance or apprehended danger'},
+            {'id': 'Section 154', 'title': 'Information in cognizable cases (FIR)'},
+            {'id': 'Section 164', 'title': 'Recording of confessions and statements'},
+            {'id': 'Section 167', 'title': 'Procedure when investigation cannot be completed in twenty-four hours'},
+            {'id': 'Section 438', 'title': 'Direction for grant of bail to person apprehending arrest'}
         ],
         'Contract Act': [
             {'id': 'Section 2', 'title': 'Interpretation-clause'},
-            {'id': 'Section 10', 'title': 'What agreements are contracts'}
+            {'id': 'Section 10', 'title': 'What agreements are contracts'},
+            {'id': 'Section 11', 'title': 'Who are competent to contract'},
+            {'id': 'Section 23', 'title': 'What considerations and objects are lawful, and what not'},
+            {'id': 'Section 73', 'title': 'Compensation for loss or damage caused by breach of contract'},
+            {'id': 'Section 124', 'title': '"Contract of indemnity" defined'}
+        ],
+        'RTI Act': [
+            {'id': 'Section 3', 'title': 'Right to Information'},
+            {'id': 'Section 4', 'title': 'Obligations of public authorities'},
+            {'id': 'Section 6', 'title': 'Request for obtaining information'},
+            {'id': 'Section 8', 'title': 'Exemption from disclosure of information'},
+            {'id': 'Section 19', 'title': 'Appeal'},
+            {'id': 'Section 20', 'title': 'Penalties'}
         ]
     }
     items = data.get(law_name, [])
@@ -389,6 +416,90 @@ def learning_daily():
             "clause": "Section 436",
             "explanation": "In bailable offenses, bail is a matter of right for the accused.",
             "example": "If arrested for a minor traffic violation, you are entitled to bail immediately."
+        },
+        {
+            "title": "Freedom of Speech and Expression",
+            "law": "Constitution of India",
+            "clause": "Article 19(1)(a)",
+            "explanation": "Every citizen has the right to express their views freely, subject to reasonable restrictions.",
+            "example": "You can write a blog post criticizing a government policy without fear of arrest, provided it doesn't incite violence."
+        },
+        {
+            "title": "Right to Equality",
+            "law": "Constitution of India",
+            "clause": "Article 14",
+            "explanation": "The State shall not deny anyone equality before the law or equal protection of the laws.",
+            "example": "A government job cannot be denied to someone legally qualified solely based on their religion or caste."
+        },
+        {
+            "title": "Right to Life and Personal Liberty",
+            "law": "Constitution of India",
+            "clause": "Article 21",
+            "explanation": "No person shall be deprived of their life or personal liberty except according to procedure established by law.",
+            "example": "You have the right to a clean environment and prompt medical treatment in government hospitals."
+        },
+        {
+            "title": "Protection against Double Jeopardy",
+            "law": "Constitution of India",
+            "clause": "Article 20(2)",
+            "explanation": "No person shall be prosecuted and punished for the same offense more than once.",
+            "example": "If you have already served a sentence for a specific theft, you cannot be tried again for the exact same theft."
+        },
+        {
+            "title": "Right against Self-Incrimination",
+            "law": "Constitution of India",
+            "clause": "Article 20(3)",
+            "explanation": "No person accused of an offense shall be compelled to be a witness against themselves.",
+            "example": "The police cannot force you to confess to a crime using physical or mental torture (the right to remain silent)."
+        },
+        {
+            "title": "First Information Report (FIR)",
+            "law": "CrPC",
+            "clause": "Section 154",
+            "explanation": "The police must record your complaint if the information discloses the commission of a cognizable (serious) offense.",
+            "example": "If someone snatches your phone, the police are legally bound to register an FIR."
+        },
+        {
+            "title": "Right to Legal Aid",
+            "law": "Constitution of India",
+            "clause": "Article 39A",
+            "explanation": "The State must provide free legal aid to ensure that justice is not denied due to economic or other disabilities.",
+            "example": "If you cannot afford a lawyer to defend yourself in court, the state will appoint a public defender for you free of cost."
+        },
+        {
+            "title": "Writ of Habeas Corpus",
+            "law": "Constitution of India",
+            "clause": "Article 32",
+            "explanation": "A legal order demanding that a person detained by the state be brought before a court to determine if their detention is lawful.",
+            "example": "If a friend is illegally detained by the police without charges, a court can order their immediate release via this writ."
+        },
+        {
+            "title": "Criminal Intimidation",
+            "law": "IPC",
+            "clause": "Section 503",
+            "explanation": "Threatening another person with injury to their person, reputation, or property to cause alarm or force them to do an act.",
+            "example": "Sending messages threatening to harm someone if they don't withdraw a complaint against you is a crime."
+        },
+        {
+            "title": "Defamation",
+            "law": "IPC",
+            "clause": "Section 499",
+            "explanation": "Making or publishing any false imputation concerning any person, intending to harm their reputation.",
+            "example": "Publishing false allegations in a newspaper claiming a local business owner is a fraud can lead to defamation charges."
+        },
+        {
+            "title": "Right to Privacy",
+            "law": "Constitution of India",
+            "clause": "Article 21 (Puttaswamy Judgment)",
+            "explanation": "Privacy is recognized as a fundamental right, intrinsic to the right to life and liberty.",
+            "example": "The government cannot secretly monitor your emails or tap your phone without a lawful and necessary purpose."
+        },
+        {
+            "title": "Cheating",
+            "law": "IPC",
+            "clause": "Section 415",
+            "explanation": "Deceiving someone fraudulently or dishonestly to deliver property or to agree to do something they wouldn't have done otherwise.",
+            "example": "Selling a fake watch online by claiming it is an original, expensive brand constitutes cheating."
         }
     ]
     

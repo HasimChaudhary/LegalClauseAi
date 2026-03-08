@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learn by Law – LegalClause AI</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232D11E9'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -13,10 +14,24 @@
             font-family: 'Poppins', sans-serif;
         }
     </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex flex-col">
-    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white shadow-sm">
+<body class="bg-gray-50 dark:bg-[oklch(14.1%_0.005_285.823)] min-h-screen flex flex-col dark:bg-[oklch(14.1%_0.005_285.823)] dark:text-gray-100 transition-colors duration-200">
+    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
         <a href="{{ url_for('learning') }}" class="flex items-center gap-2 text-indigo-600 font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -25,33 +40,215 @@
             </svg>
             Back to Dashboard
         </a>
-        <span class="text-gray-900 font-bold text-xl">Learn by Law</span>
+        <span class="text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 font-bold text-xl">Learn by Law</span>
         <div class="w-20"></div> <!-- Spacer -->
     </nav>
 
     <main class="flex-grow container mx-auto px-6 py-12 max-w-4xl">
         <div class="text-center mb-12">
-            <h1 class="text-3xl font-bold text-gray-900 mb-4">Select a Law / Act</h1>
-            <p class="text-gray-600">Choose a legal framework to start learning clause by clause.</p>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 mb-4">Select a Law / Act</h1>
+            <p class="text-gray-600 dark:text-gray-400 dark:text-gray-400 dark:text-gray-400">Choose a legal framework to start learning clause by clause.</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {% for law in ['Constitution of India', 'IPC', 'CrPC', 'Contract Act'] %}
-            <a href="{{ url_for('learning_law_view', law_name=law) }}"
-                class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-indigo-500 hover:shadow-md transition-all group">
-                <div class="flex items-center justify-between">
-                    <span class="text-lg font-semibold text-gray-800 group-hover:text-indigo-600">{{ law }}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 group-hover:text-indigo-600"
-                        viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 11 7.293 7.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clip-rule="evenodd" />
-                    </svg>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Constitution Card -->
+            <a href="{{ url_for('learning_law_view', law_name='Constitution of India') }}" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1"
+                class="group relative bg-white/80 dark:bg-[#1a1a2e]/80 backdrop-blur-xl rounded-3xl p-1 border border-gray-200 dark:border-gray-800 shadow-xl hover:shadow-2xl transition-all block overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                <div class="bg-white dark:bg-[#11111e] rounded-[22px] h-full p-8 relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/50 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                                <svg class="w-7 h-7 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <span class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-200 dark:border-blue-800">Fundamental Rights</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Constitution of India</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">The supreme law of India, documenting fundamental political code, structure, procedures, and duties.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <div class="flex justify-between text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            <span>Progress</span>
+                            <span>45%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
+                            <div class="bg-blue-500 h-full rounded-full w-[45%] group-hover:bg-blue-400 transition-colors"></div>
+                        </div>
+                    </div>
                 </div>
             </a>
-            {% endfor %}
+
+            <!-- IPC Card -->
+            <a href="{{ url_for('learning_law_view', law_name='IPC') }}" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1"
+                class="group relative bg-white/80 dark:bg-[#1a1a2e]/80 backdrop-blur-xl rounded-3xl p-1 border border-gray-200 dark:border-gray-800 shadow-xl hover:shadow-2xl transition-all block overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-red-500/20 to-rose-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                <div class="bg-white dark:bg-[#11111e] rounded-[22px] h-full p-8 relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-14 h-14 bg-red-100 dark:bg-red-900/50 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                                <svg class="w-7 h-7 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                                </svg>
+                            </div>
+                            <span class="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-bold px-3 py-1 rounded-full border border-red-200 dark:border-red-800">Criminal Law</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Indian Penal Code (IPC)</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">The official criminal code covering all substantive aspects of criminal law and punishments.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <div class="flex justify-between text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            <span>Progress</span>
+                            <span>12%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
+                            <div class="bg-red-500 h-full rounded-full w-[12%] group-hover:bg-red-400 transition-colors"></div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- CrPC Card -->
+            <a href="{{ url_for('learning_law_view', law_name='CrPC') }}" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1"
+                class="group relative bg-white/80 dark:bg-[#1a1a2e]/80 backdrop-blur-xl rounded-3xl p-1 border border-gray-200 dark:border-gray-800 shadow-xl hover:shadow-2xl transition-all block overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                <div class="bg-white dark:bg-[#11111e] rounded-[22px] h-full p-8 relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-14 h-14 bg-orange-100 dark:bg-orange-900/50 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                                <svg class="w-7 h-7 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <span class="bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-bold px-3 py-1 rounded-full border border-orange-200 dark:border-orange-800">Procedures</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Criminal Procedure Code</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">The main legislation on procedure for administration of substantive criminal law.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <div class="flex justify-between text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            <span>Progress</span>
+                            <span>0%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
+                            <div class="bg-orange-500 h-full rounded-full w-[5%] opacity-30 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Contract Act Card -->
+            <a href="{{ url_for('learning_law_view', law_name='Contract Act') }}" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1"
+                class="group relative bg-white/80 dark:bg-[#1a1a2e]/80 backdrop-blur-xl rounded-3xl p-1 border border-gray-200 dark:border-gray-800 shadow-xl hover:shadow-2xl transition-all block overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                <div class="bg-white dark:bg-[#11111e] rounded-[22px] h-full p-8 relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/50 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                                <svg class="w-7 h-7 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <span class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-bold px-3 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">Civil Law</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Indian Contract Act</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">Learn about the formation, execution, and breach of contracts binding under Indian law.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <div class="flex justify-between text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            <span>Progress</span>
+                            <span>30%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
+                            <div class="bg-indigo-500 h-full rounded-full w-[30%] group-hover:bg-indigo-400 transition-colors"></div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+            <!-- Right to Information Act Card -->
+            <a href="{{ url_for('learning_law_view', law_name='RTI Act') }}" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1"
+                class="group relative bg-white/80 dark:bg-[#1a1a2e]/80 backdrop-blur-xl rounded-3xl p-1 border border-gray-200 dark:border-gray-800 shadow-xl hover:shadow-2xl transition-all block overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                <div class="bg-white dark:bg-[#11111e] rounded-[22px] h-full p-8 relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-14 h-14 bg-teal-100 dark:bg-teal-900/50 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                                <svg class="w-7 h-7 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                            </div>
+                            <span class="bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs font-bold px-3 py-1 rounded-full border border-teal-200 dark:border-teal-800">Transparency</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Right to Information</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">Your right to access government records, promoting transparency and accountability in working of every public authority.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <div class="flex justify-between text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            <span>Progress</span>
+                            <span>0%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
+                            <div class="bg-teal-500 h-full rounded-full w-[5%] opacity-30 group-hover:opacity-100 transition-colors"></div>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
     </main>
+
+    <script>
+        function setupThemeToggle(btnId, darkIconId, lightIconId) {
+            var themeToggleBtn = document.getElementById(btnId);
+            var themeToggleDarkIcon = document.getElementById(darkIconId);
+            var themeToggleLightIcon = document.getElementById(lightIconId);
+
+            if (!themeToggleBtn || !themeToggleDarkIcon || !themeToggleLightIcon) return;
+
+            // Change the icons inside the button based on previous settings
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                // toggle icons inside button
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                // if set via local storage previously
+                if (localStorage.getItem('theme')) {
+                    if (localStorage.getItem('theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+
+                // if NOT set via local storage previously
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupThemeToggle('theme-toggle', 'theme-toggle-dark-icon', 'theme-toggle-light-icon');
+            setupThemeToggle('theme-toggle-mobile', 'theme-toggle-dark-icon-mobile', 'theme-toggle-light-icon-mobile');
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 </body>
 
 </html>

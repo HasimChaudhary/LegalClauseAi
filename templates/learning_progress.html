@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Progress – LegalClause AI</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232D11E9'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -13,10 +14,24 @@
             font-family: 'Poppins', sans-serif;
         }
     </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex flex-col">
-    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white shadow-sm">
+<body class="bg-gray-50 dark:bg-[oklch(14.1%_0.005_285.823)] min-h-screen flex flex-col dark:bg-[oklch(14.1%_0.005_285.823)] dark:text-gray-100 transition-colors duration-200">
+    <nav class="flex items-center justify-between px-6 md:px-16 py-4 bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
         <a href="{{ url_for('learning') }}" class="flex items-center gap-2 text-indigo-600 font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -25,21 +40,21 @@
             </svg>
             Back to Dashboard
         </a>
-        <span class="text-gray-900 font-bold text-xl">My Progress</span>
+        <span class="text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 font-bold text-xl">My Progress</span>
         <div class="w-20"></div>
     </nav>
 
     <main class="flex-grow container mx-auto px-6 py-12 max-w-4xl">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center">
+            <div class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-6 rounded-2xl border border-gray-100 shadow-sm text-center">
                 <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Total Visits</p>
                 <p class="text-4xl font-bold text-indigo-600">{{ progress.values() | sum }}</p>
             </div>
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center">
+            <div class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-6 rounded-2xl border border-gray-100 shadow-sm text-center">
                 <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Modes Explored</p>
                 <p class="text-4xl font-bold text-green-600">{{ progress.keys() | length }} / 5</p>
             </div>
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center">
+            <div class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-6 rounded-2xl border border-gray-100 shadow-sm text-center">
                 <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Current Level</p>
                 <p class="text-4xl font-bold text-orange-600">
                     {% if (progress.values() | sum) > 20 %}Expert{% elif (progress.values() | sum) > 10 %}Intermediate{%
@@ -48,8 +63,8 @@
             </div>
         </div>
 
-        <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-            <h2 class="text-xl font-bold text-gray-900 mb-8">Activity Breakdown</h2>
+        <div class="bg-white dark:bg-[oklch(18%_0.005_285.823)] dark:border-white/5 p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 dark:text-gray-100 mb-8">Activity Breakdown</h2>
             <div class="space-y-6">
                 {% set modes = [
                 ('law', 'Learn by Law / Act', 'bg-indigo-600'),
@@ -63,10 +78,10 @@
                 {% set percentage = [count * 10, 100] | min %}
                 <div class="space-y-2">
                     <div class="flex justify-between items-center">
-                        <span class="font-medium text-gray-700">{{ label }}</span>
+                        <span class="font-medium text-gray-700 dark:text-gray-300">{{ label }}</span>
                         <span class="text-sm font-bold text-gray-500">{{ count }} topics</span>
                     </div>
-                    <div class="w-full bg-gray-100 rounded-full h-3">
+                    <div class="w-full bg-gray-100 dark:bg-white/10 rounded-full h-3">
                         <div class="{{ color }} h-3 rounded-full transition-all duration-1000"
                             style="width: {{ percentage }}%"></div>
                     </div>
@@ -75,6 +90,55 @@
             </div>
         </div>
     </main>
+
+    <script>
+        function setupThemeToggle(btnId, darkIconId, lightIconId) {
+            var themeToggleBtn = document.getElementById(btnId);
+            var themeToggleDarkIcon = document.getElementById(darkIconId);
+            var themeToggleLightIcon = document.getElementById(lightIconId);
+
+            if (!themeToggleBtn || !themeToggleDarkIcon || !themeToggleLightIcon) return;
+
+            // Change the icons inside the button based on previous settings
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                // toggle icons inside button
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                // if set via local storage previously
+                if (localStorage.getItem('theme')) {
+                    if (localStorage.getItem('theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+
+                // if NOT set via local storage previously
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupThemeToggle('theme-toggle', 'theme-toggle-dark-icon', 'theme-toggle-light-icon');
+            setupThemeToggle('theme-toggle-mobile', 'theme-toggle-dark-icon-mobile', 'theme-toggle-light-icon-mobile');
+        });
+    </script>
 </body>
 
 </html>
